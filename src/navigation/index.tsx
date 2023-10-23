@@ -8,14 +8,15 @@ import EmailValidate from '../screens/Login/components/EmailValidate/EmailValida
 import TypeOTP from '../screens/Login/components/TypeOTP/TypeOTP';
 import LoginScreen from '../screens/Login/Login';
 import {SCREEN} from '../constants';
-const {Home, Welcome, Validate, OTP, Register, Login} = SCREEN;
+import HistoryScreen from '../screens/History/History';
+const {Home, Welcome, Validate, OTP, Register, Login, History} = SCREEN;
 const Stack = createStackNavigator();
 
 const Navigator = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName={Welcome}
+        initialRouteName={History}
         screenOptions={{headerShown: false}}>
         <Stack.Screen name={Home} component={HomeScreen} />
         <Stack.Screen name={Welcome} component={WelcomeScreen} />
@@ -23,6 +24,7 @@ const Navigator = () => {
         <Stack.Screen name={OTP} component={TypeOTP} />
         <Stack.Screen name={Register} component={RegisterScreen} />
         <Stack.Screen name={Login} component={LoginScreen} />
+        <Stack.Screen name={History} component={HistoryScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

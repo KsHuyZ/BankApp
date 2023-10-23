@@ -5,6 +5,7 @@ export const SCREEN = {
   OTP: 'OTP',
   Register: 'Register',
   Login: 'Login',
+  History: 'History',
 };
 export const storageKey = {
   profileKey: 'profile',
