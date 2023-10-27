@@ -6,6 +6,7 @@ export const SCREEN = {
   Register: 'Register',
   Login: 'Login',
   History: 'History',
+  Profile: 'Profile',
 };
 export const storageKey = {
   profileKey: 'profile',
