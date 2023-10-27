@@ -9,6 +9,7 @@ export const SCREEN = {
   Transaction: 'Transaction',
   TransferSuccess: 'TransferSuccess',
   History: 'History',
+  MyQR: 'MyQR',
 };
 export const storageKey = {
   profileKey: 'profile',

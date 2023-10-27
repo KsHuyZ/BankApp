@@ -12,6 +12,7 @@ import {SCREEN, storageKey} from '../constants';
 import StartScreen from '../screens/Start/Start';
 import TransactionScreen from '../screens/Transaction/Transaction';
 import TransferSuccessScreen from '../screens/Transaction/components/TransferSuccess';
+import MyQRScreen from '../screens/MyQR/MyQR';
 import {getStorage, removeStorage} from '../utils';
 import {useAuth, useSocketEvent} from '../hooks';
 
@@ -22,13 +23,14 @@ const {
   OTP,
   Register,
   Login,
-  History
+  History,
   Start,
   Transaction,
   TransferSuccess,
+  MyQR,
 } = SCREEN;
 const {refreshTokenKey} = storageKey;
-        
+
 const Stack = createStackNavigator();
 
 const Navigator = ({navigation}: any) => {
@@ -96,6 +98,7 @@ const Navigator = ({navigation}: any) => {
       <Stack.Screen name={Transaction} component={TransactionScreen} />
       <Stack.Screen name={TransferSuccess} component={TransferSuccessScreen} />
       <Stack.Screen name={History} component={HistoryScreen} />
+      <Stack.Screen name={MyQR} component={MyQRScreen} />
     </Stack.Navigator>
   );
 };

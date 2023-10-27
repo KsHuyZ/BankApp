@@ -36,7 +36,7 @@ const EmailValidate = ({navigation}: any) => {
         return navigation.navigate(Register);
       }
       const userProfile = JSON.stringify(result.user);
-      saveStorage(profileKey, userProfile);
+      await saveStorage(profileKey, userProfile);
       return navigation.navigate(Login);
     }
   };

@@ -41,7 +41,7 @@ const HomeScreen = ({navigation}: any) => {
           <Card />
         </View>
         <ListService navigate={handleNavigateScreen} />
-        <RecentTransaction />
+        <RecentTransaction navigation={navigation} />
       </ScrollView>
     </SafeAreaView>
   );

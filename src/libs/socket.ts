@@ -1,5 +1,6 @@
 import {io} from 'socket.io-client';
-const socket = io('https://banka-8las.onrender.com');
+// const socket = io('https://banka-8las.onrender.com');
+const socket = io('http://10.0.2.2:4000');
 socket.on('connect', () => {
   console.log(socket.id);
 });

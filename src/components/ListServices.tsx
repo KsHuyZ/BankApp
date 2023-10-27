@@ -11,7 +11,7 @@ export interface servicesItem {
 }
 const fontSize = 25;
 
-const {Transaction} = SCREEN;
+const {Transaction, MyQR} = SCREEN;
 
 const listService = [
   {
@@ -30,6 +30,7 @@ const listService = [
   {
     name: 'My QR',
     icon: <AntdIcon name="qrcode" style={{fontSize}} />,
+    navigate: MyQR,
   },
 ];
 
