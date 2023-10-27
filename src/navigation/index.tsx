@@ -6,6 +6,7 @@ import WelcomeScreen from '../screens/Welcome/Welcome';
 import RegisterScreen from '../screens/Register/Register';
 import EmailValidate from '../screens/Login/components/EmailValidate/EmailValidate';
 import TypeOTP from '../screens/Login/components/TypeOTP/TypeOTP';
+import HistoryScreen from '../screens/History/History';
 import LoginScreen from '../screens/Login/Login';
 import {SCREEN, storageKey} from '../constants';
 import StartScreen from '../screens/Start/Start';
@@ -21,11 +22,13 @@ const {
   OTP,
   Register,
   Login,
+  History
   Start,
   Transaction,
   TransferSuccess,
 } = SCREEN;
 const {refreshTokenKey} = storageKey;
+        
 const Stack = createStackNavigator();
 
 const Navigator = ({navigation}: any) => {
@@ -92,6 +95,7 @@ const Navigator = ({navigation}: any) => {
       <Stack.Screen name={Start} component={StartScreen} />
       <Stack.Screen name={Transaction} component={TransactionScreen} />
       <Stack.Screen name={TransferSuccess} component={TransferSuccessScreen} />
+      <Stack.Screen name={History} component={HistoryScreen} />
     </Stack.Navigator>
   );
 };
