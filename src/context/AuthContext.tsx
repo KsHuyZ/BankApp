@@ -1,11 +1,14 @@
 import React, {createContext, useReducer, ReactElement, ReactNode} from 'react';
+import {socketEmit} from '../utils';
 
 export const initialProfile: ProfileType = {
+  _id: '',
   firstName: '',
   lastName: '',
-  balance: 0,
   email: '',
-  token: '',
+  balance: 0,
+  accessToken: '',
+  refreshToken: '',
 };
 
 const enum REDUCER_ACTION_TYPE {
@@ -23,8 +26,10 @@ const profileReducer = (state: ProfileType, action: ReducerAction) => {
   switch (action.type) {
     case REDUCER_ACTION_TYPE.SETPROFILE:
       if (!action.payload) {
-        return initialProfile;
+        return state;
       }
+      return action.payload;
+    case REDUCER_ACTION_TYPE.UPDATEPROFILE:
       return action.payload;
     case REDUCER_ACTION_TYPE.CLEARPROFILE:
       return initialProfile;
@@ -35,8 +40,10 @@ const profileReducer = (state: ProfileType, action: ReducerAction) => {
 
 const useAuthContext = (profile: ProfileType) => {
   const [state, dispatch] = useReducer(profileReducer, profile);
-  const saveProfile = (item: ProfileType) =>
+  const saveProfile = (item: ProfileType) => {
+    socketEmit('create-user', {_id: item._id});
     dispatch({type: REDUCER_ACTION_TYPE.SETPROFILE, payload: item});
+  };
   const updateProfile = (item: ProfileType) =>
     dispatch({type: REDUCER_ACTION_TYPE.UPDATEPROFILE, payload: item});
 

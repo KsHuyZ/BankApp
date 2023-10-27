@@ -1,9 +1,14 @@
 type ProfileType = {
-  firstName: string;
-  lastName: string;
+  _id: string;
+  firstName?: string;
+  lastName?: string;
   balance: number;
-  email: string;
-  token: string;
+  email?: string;
+  token?: string;
+  phoneNumber?: string;
+  cardNumber?: string;
+  accessToken?: string;
+  refreshToken?: string;
 };
 
 const enum REDUCER_ACTION_TYPE {
@@ -12,16 +17,6 @@ const enum REDUCER_ACTION_TYPE {
   CLEARPROFILE,
 }
 
-type ReducerAction = {
-  type: REDUCER_ACTION_TYPE;
-  payload?: string;
-};
-type UseAuthHookType = {
-  profile: ProfileType;
-  saveProfile: () => void;
-  updateProfile: () => void;
-  clearProfile: () => void;
-};
 type RegisterFormType = {
   firstName: string;
   lastName: string;

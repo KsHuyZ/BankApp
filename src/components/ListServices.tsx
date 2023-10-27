@@ -1,45 +1,53 @@
 import React from 'react';
-import {Image, StyleSheet, Text, View} from 'react-native';
+import {Image, StyleSheet, Text, Touchable, View} from 'react-native';
+import {TouchableOpacity} from 'react-native-gesture-handler';
+import AntdIcon from 'react-native-vector-icons/AntDesign';
+import FontAS from 'react-native-vector-icons/FontAwesome6';
+import MCI from 'react-native-vector-icons/MaterialCommunityIcons';
+import {SCREEN} from '../constants/index';
 export interface servicesItem {
   name: string;
   icon: any;
 }
+const fontSize = 25;
+
+const {Transaction} = SCREEN;
 
 const listService = [
   {
-    name: 'Wallet',
-    icon: require('../assets/images/ic_wallet.png'),
+    name: 'My Wallet',
+    icon: <AntdIcon name="wallet" style={{fontSize}} />,
   },
   {
     name: 'Transfer',
-    icon: require('../assets/images/ic_transfer.png'),
+    navigate: Transaction,
+    icon: <FontAS name="arrow-right-arrow-left" style={{fontSize}} />,
   },
   {
-    name: 'Pay',
-    icon: require('../assets/images/ic_pay.png'),
+    name: 'QR Pay',
+    icon: <MCI name="line-scan" style={{fontSize}} />,
   },
   {
-    name: 'Top Up',
-    icon: require('../assets/images/ic_topup.png'),
+    name: 'My QR',
+    icon: <AntdIcon name="qrcode" style={{fontSize}} />,
   },
 ];
 
-const renderServiceItem = (item: servicesItem) => {
-  return (
-    <View key={item.name} style={styles.items}>
-      <View style={styles.icon}>
-        <Image source={item.icon} />
-      </View>
-      <Text style={styles.itemText}>{item.name}</Text>
-    </View>
-  );
-};
-
-const ListService = () => {
+const ListService = ({navigate}: {navigate: (screen: string) => void}) => {
   return (
     <View>
       <Text style={styles.title}>Service</Text>
-      <View style={styles.list}>{listService.map(renderServiceItem)}</View>
+      <View style={styles.list}>
+        {listService.map(item => (
+          <TouchableOpacity
+            key={item.name}
+            style={styles.items}
+            onPress={() => navigate(item.navigate)}>
+            <View style={styles.icon}>{item.icon}</View>
+            <Text style={styles.itemText}>{item.name}</Text>
+          </TouchableOpacity>
+        ))}
+      </View>
     </View>
   );
 };
@@ -74,6 +82,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   itemText: {
-    marginTop: 10,
+    // marginTop: 10,
   },
 });
