@@ -35,7 +35,10 @@ const TypeOTP = ({navigation}: any) => {
       return navigation.navigate(Register);
     }
     if (res.message === 'wrong_otp') {
-      setError('Wrong OTP Code');
+      return setError('Wrong OTP Code');
+    }
+    if (res.message === 'otp_expired') {
+      return setError('OTP is expired');
     }
   };
 

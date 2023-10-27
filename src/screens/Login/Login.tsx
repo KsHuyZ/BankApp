@@ -2,7 +2,7 @@ import {View, Text} from 'react-native';
 import React, {useState, useEffect} from 'react';
 import Background from '../../components/Background';
 import styles from './components/EmailValidate/validate.styles';
-import {getStorage} from '../../utils';
+import {getStorage, saveStorage} from '../../utils';
 import {storageKey, SCREEN} from '../../constants';
 import {Formik} from 'formik';
 import * as Yup from 'yup';
@@ -10,6 +10,8 @@ import TextInputPaper from '../../components/TextInputPaper';
 import {TextInput} from 'react-native-paper';
 import ButtonPaper from '../../components/ButtonPaper';
 import authApi from '../../api/authApi';
+import {useAuth} from '../../hooks';
+import httpClient from '../../libs/axios';
 
 const {profileKey} = storageKey;
 const {Validate, Home} = SCREEN;
@@ -19,11 +21,14 @@ const schema = Yup.object().shape({
   password: Yup.string().required('Please enter password'),
 });
 
-const Login = ({navigation}: any) => {
+const Login = ({navigation, route}: any) => {
   const [profile, setProfile] = useState<ProfileType | null>(null);
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [error, setError] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
+  const goBack = route.params?.goBack;
+  const {saveProfile} = useAuth();
+
   const handleGetProfile = async () => {
     const profileString = await getStorage(profileKey);
     if (profileString) {
@@ -39,8 +44,9 @@ const Login = ({navigation}: any) => {
   const handleSignIn = async ({password}: {password: string}) => {
     setLoading(true);
     const result = await signIn(password);
-    console.log(result)
     if (result.success) {
+      saveProfile(result.user);
+      await saveStorage(profileKey, JSON.stringify(result.user));
       return navigation.navigate(Home);
     }
     if (result.message === 'wrong_password') {
@@ -53,7 +59,10 @@ const Login = ({navigation}: any) => {
   };
 
   return (
-    <Background goBack={() => navigation.navigate(Validate)}>
+    <Background
+      goBack={() =>
+        goBack ? navigation.goBack() : navigation.navigate(Validate)
+      }>
       <View>
         <View style={styles.headSection}>
           <Text style={styles.textHead}>Sign In</Text>

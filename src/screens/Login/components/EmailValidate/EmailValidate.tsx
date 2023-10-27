@@ -27,11 +27,12 @@ const EmailValidate = ({navigation}: any) => {
     setChecking(true);
     const result = await checkUser(email);
     if (result.success) {
-      await saveStorage(emailKey, email);
       if (!result.isVerified) {
-        return navigation.navigate(OTP);
+        await saveStorage(emailKey, email);
+        return navigation.replace(OTP);
       }
       if (!result.password) {
+        await saveStorage(emailKey, email);
         return navigation.navigate(Register);
       }
       const userProfile = JSON.stringify(result.user);

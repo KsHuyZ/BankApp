@@ -11,9 +11,13 @@ import authApi from '../../api/authApi';
 import {SCREEN} from '../../constants';
 import {TextInput} from 'react-native-paper';
 import KeyboardAvoidingWrapper from '../../components/KeyboardAvoidingWrapper';
+import {saveStorage} from '../../utils';
+import {storageKey} from '../../constants';
+import {useAuth} from '../../hooks';
+import httpClient from '../../libs/axios';
 
 const {Home} = SCREEN;
-
+const {profileKey, refreshTokenKey} = storageKey;
 const schema = Yup.object().shape({
   firstName: Yup.string().required('Please enter first name'),
   lastName: Yup.string().required('Please enter last name'),
@@ -36,6 +40,7 @@ const Register = ({navigation}: any) => {
     rePassword: false,
   });
 
+  const {saveProfile} = useAuth();
   const handleSubmitForm = async ({
     firstName,
     lastName,
@@ -53,6 +58,7 @@ const Register = ({navigation}: any) => {
       rePassword,
     });
     if (result.success) {
+      saveProfile(result.user);
       return navigation.navigate(Home);
     }
     setLoading(false);

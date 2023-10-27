@@ -27,6 +27,25 @@ const TextInputPaper = (props: TextInputPaperProps) => {
   );
 };
 
+export const TextInputFlat = (props: TextInputPaperProps) => {
+  const {errorMessage} = props;
+  return (
+    <View style={styles.textInput}>
+      <TextInput
+        mode="flat"
+        underlineColor="black"
+        activeUnderlineColor="black"
+        style={styles.inputFlat}
+        error={errorMessage ? true : false}
+        {...props}
+      />
+      <HelperText type="error" visible={errorMessage ? true : false}>
+        {errorMessage}
+      </HelperText>
+    </View>
+  );
+};
+
 export default TextInputPaper;
 
 const styles = StyleSheet.create({
@@ -36,6 +55,10 @@ const styles = StyleSheet.create({
   },
   input: {
     backgroundColor: '#ffffff33',
+    width: '100%',
+  },
+  inputFlat: {
+    backgroundColor: 'transapent',
     width: '100%',
   },
 });
