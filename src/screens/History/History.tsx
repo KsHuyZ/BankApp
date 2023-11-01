@@ -57,6 +57,7 @@ const data = [
 ];
 
 const History = () => {
+    
   return (
     <SafeAreaView style={{flex: 1}}>
       <View>
