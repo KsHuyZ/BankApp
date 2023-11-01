@@ -8,6 +8,7 @@ import EmailValidate from '../screens/Login/components/EmailValidate/EmailValida
 import TypeOTP from '../screens/Login/components/TypeOTP/TypeOTP';
 import HistoryScreen from '../screens/History/History';
 import LoginScreen from '../screens/Login/Login';
+import NotificationScreen from '../screens/Notification/Notification';
 import {SCREEN, storageKey} from '../constants';
 import StartScreen from '../screens/Start/Start';
 import TransactionScreen from '../screens/Transaction/Transaction';
@@ -27,6 +28,7 @@ const {
   Start,
   Transaction,
   TransferSuccess,
+  Notification,
   MyQR,
 } = SCREEN;
 const {refreshTokenKey} = storageKey;
@@ -86,7 +88,7 @@ const Navigator = ({navigation}: any) => {
 
   return (
     <Stack.Navigator
-      initialRouteName={Start}
+      initialRouteName={Notification}
       screenOptions={{headerShown: false}}>
       <Stack.Screen name={Home} component={HomeScreen} />
       <Stack.Screen name={Welcome} component={WelcomeScreen} />
@@ -98,7 +100,9 @@ const Navigator = ({navigation}: any) => {
       <Stack.Screen name={Transaction} component={TransactionScreen} />
       <Stack.Screen name={TransferSuccess} component={TransferSuccessScreen} />
       <Stack.Screen name={History} component={HistoryScreen} />
+      <Stack.Screen name={Notification} component={NotificationScreen} />
       <Stack.Screen name={MyQR} component={MyQRScreen} />
+
     </Stack.Navigator>
   );
 };
