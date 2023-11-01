@@ -44,6 +44,7 @@ const Login = ({navigation, route}: any) => {
   const handleSignIn = async ({password}: {password: string}) => {
     setLoading(true);
     const result = await signIn(password);
+    setLoading(false);
     if (result.success) {
       saveProfile(result.user);
       await saveStorage(profileKey, JSON.stringify(result.user));
@@ -55,7 +56,7 @@ const Login = ({navigation, route}: any) => {
     if (result.message === 'not_exist') {
       setError('Email not register');
     }
-    setLoading(false);
+    
   };
 
   return (

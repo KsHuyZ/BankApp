@@ -47,18 +47,20 @@ const Transaction = ({navigation}: any) => {
     newBalance,
     success,
     amount,
+    time,
   }: {
     newBalance: number;
     success: boolean;
     amount: number;
+    time: string;
   }) => {
-    console.log(newBalance, success, amount);
     if (success) {
       updateProfile({...profile, balance: newBalance});
       console.log({...profile, balance: newBalance});
       navigation.replace(TransferSuccess, {
         success,
         amount,
+        time,
       });
     }
   };

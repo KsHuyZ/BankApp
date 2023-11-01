@@ -1,24 +1,38 @@
 import {StyleSheet} from 'react-native';
-import { Colors } from 'react-native/Libraries/NewAppScreen';
 const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: 'white',
-      padding: 20,
-      margin: 2,
-      justifyContent: 'center',
-      flexDirection:'column',
+  contain: {
+    padding: 12,
+  },
+  container: {
+    flex: 1,
+    backgroundColor: 'white',
+    padding: 20,
+    margin: 2,
+    justifyContent: 'center',
+    flexDirection: 'column',
+  },
+  Time: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  title: {
+    textAlign: 'center',
+    color: '#fff',
+    fontSize: 20,
+  },
+  optionSection: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  emptySection: {
+    padding: 12,
+  },
+  emptyText: {
+    textAlign: 'center',
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#fff',
+  },
+});
 
-    },
-     Time: {
-        
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-
-     },
-    
-
-    
-  });
-  
-  export default styles;
+export default styles;

@@ -13,6 +13,7 @@ import {SCREEN, storageKey} from '../constants';
 import StartScreen from '../screens/Start/Start';
 import TransactionScreen from '../screens/Transaction/Transaction';
 import TransferSuccessScreen from '../screens/Transaction/components/TransferSuccess';
+import MyQRScreen from '../screens/MyQR/MyQR';
 import {getStorage, removeStorage} from '../utils';
 import {useAuth, useSocketEvent} from '../hooks';
 
@@ -28,6 +29,7 @@ const {
   Transaction,
   TransferSuccess,
   Notification,
+  MyQR,
 } = SCREEN;
 const {refreshTokenKey} = storageKey;
 
@@ -99,6 +101,8 @@ const Navigator = ({navigation}: any) => {
       <Stack.Screen name={TransferSuccess} component={TransferSuccessScreen} />
       <Stack.Screen name={History} component={HistoryScreen} />
       <Stack.Screen name={Notification} component={NotificationScreen} />
+      <Stack.Screen name={MyQR} component={MyQRScreen} />
+
     </Stack.Navigator>
   );
 };

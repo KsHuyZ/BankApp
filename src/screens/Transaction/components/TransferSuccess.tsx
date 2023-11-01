@@ -5,9 +5,10 @@ import {TouchableHighlight} from 'react-native-gesture-handler';
 import styles from './transfer.styles';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {SCREEN} from '../../../constants/index';
+import {getCurrentTime} from '../../../utils';
 const {Home, Transaction} = SCREEN;
 const TransferSuccess = ({route, navigation}: any) => {
-  const {success, amount} = route.params;
+  const {success, amount, time} = route.params;
   const iconStyle = success
     ? styles.successIcon
     : {...styles.successIcon, color: 'red'};
@@ -35,11 +36,7 @@ const TransferSuccess = ({route, navigation}: any) => {
             <View style={styles.titleSection}>
               <View style={styles.transferSection}>
                 <Text>Time</Text>
-                <Text>15:25 - 27/10/2023</Text>
-              </View>
-              <View style={styles.transferSection}>
-                <Text>Transfer Detail</Text>
-                <Text>123456778</Text>
+                <Text>{success ? time : getCurrentTime()}</Text>
               </View>
             </View>
           </CardContent>

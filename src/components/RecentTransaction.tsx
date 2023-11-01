@@ -1,55 +1,59 @@
-import React from 'react';
-import {Image, StyleSheet, Text, View} from 'react-native';
+import React, {useState, useEffect} from 'react';
+import {StyleSheet, Text, View} from 'react-native';
+import historyApi from '../api/historyApi';
+import {useAuth} from '../hooks';
+import {ActivityIndicator, Button} from 'react-native-paper';
+import historyStyles from '../screens/History/History.styles';
+import {transactionType} from '../utils';
+import {SCREEN} from '../constants/index';
 
-interface transactionItem {
-  type: string;
-  icon: any;
-  date: string;
-  payment: string;
-}
+const {getHistoryLimit} = historyApi;
+const {RECEIVED, SEND} = transactionType;
+const {History} = SCREEN;
 
-const listTransations = [
-  {
-    type: 'Spotify',
-    icon: require('../assets/images/ic_spotify.png'),
-    date: 'Jun 12, 12:30',
-    payment: '+ $12',
-  },
-  {
-    type: 'Paypal',
-    icon: require('../assets/images/ic_paypal.png'),
-    date: 'Jun 12, 12:30',
-    payment: '+ $12',
-  },
-  {
-    type: 'Dribble',
-    icon: require('../assets/images/ic_dribble.png'),
-    date: 'Jun 12, 12:30',
-    payment: '+ $14',
-  },
-];
 
-const renderTransactionItem = (item: transactionItem) => (
-  <View key={item.type} style={styles.items}>
-    <View style={styles.icon}>
-      <Image source={item.icon} />
+
+const renderTransactionItem = (item: HistoryType) => (
+  <View style={historyStyles.container} key={item._id}>
+    <View style={historyStyles.Time}>
+      <Text>{item.time}</Text>
+      <Text
+        style={{color: `${item.transactionType === SEND ? 'red' : 'green'}`}}>
+        {item.transactionType === SEND ? '-' : '+'} {item.ammount} USD
+      </Text>
     </View>
-    <View style={styles.itemBody}>
-      <Text style={styles.type}>{item.type}</Text>
-      <Text style={styles.date}>{item.date}</Text>
-    </View>
-    <View>
-      <Text style={styles.payment}>{item.payment}</Text>
-    </View>
+    <Text>{item.message}</Text>
   </View>
 );
 
-const RecentTransaction = () => {
+const RecentTransaction = ({navigation}: any) => {
+  const [history, setHistory] = useState<HistoryType[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
+  const {profile} = useAuth();
+
+  const handleGetHistory = async () => {
+    setLoading(true);
+    const result = await getHistoryLimit(profile._id);
+    setLoading(false);
+    setHistory(result.histories);
+  };
+
+  useEffect(() => {
+    handleGetHistory();
+  }, []);
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Recent Transaction</Text>
       <View style={styles.list}>
-        {listTransations.map(renderTransactionItem)}
+        {loading ? (
+          <ActivityIndicator animating={true} color={'black'} />
+        ) : (
+          history.map(renderTransactionItem)
+        )}
+        <Button textColor="black" onPress={() => navigation.navigate(History)}>
+          See more
+        </Button>
       </View>
     </View>
   );
@@ -63,7 +67,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   container: {
-    marginTop: 12,
+    paddingVertical: 20,
   },
   items: {
     flexDirection: 'row',

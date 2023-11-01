@@ -1,5 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import socket from '../libs/socket';
+import dayjs from 'dayjs';
+import 'dayjs/locale/vi';
 
 export const saveStorage = async (key: string, value: string) => {
   try {
@@ -46,4 +48,12 @@ export const socketOn = (event: string, callback: (data: any) => void) => {
   socket.on(event, data => {
     callback(data);
   });
+};
+
+export const getCurrentTime = () => {
+  dayjs().format(" 'HH:MM' - YYYY/MM/DD");
+};
+export const transactionType = {
+  RECEIVED: 'RECEIVED',
+  SEND: 'SEND',
 };

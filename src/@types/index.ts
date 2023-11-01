@@ -11,6 +11,13 @@ type ProfileType = {
   refreshToken?: string;
 };
 
+type HistoryType = {
+  transactionType: string;
+  time: string;
+  ammount: number;
+  message: string;
+};
+
 const enum REDUCER_ACTION_TYPE {
   SETPROFILE,
   UPDATEPROFILE,
