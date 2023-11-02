@@ -16,6 +16,20 @@ const styles = StyleSheet.create({
   card: {
     paddingVertical: 14,
   },
+  notiIcon: {
+    position: 'relative',
+  },
+  numUnseen: {
+    position: 'absolute',
+    top: -1,
+    left: -5,
+    padding: 3,
+    paddingHorizontal: 5,
+    borderRadius: 30,
+    fontSize: 10,
+    backgroundColor: 'red',
+    color: '#fff',
+  },
 });
 
 export default styles;

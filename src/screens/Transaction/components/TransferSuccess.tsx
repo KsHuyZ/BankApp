@@ -8,7 +8,7 @@ import {SCREEN} from '../../../constants/index';
 import {getCurrentTime} from '../../../utils';
 const {Home, Transaction} = SCREEN;
 const TransferSuccess = ({route, navigation}: any) => {
-  const {success, amount, time} = route.params;
+  const {success, amount, time, toUser} = route.params;
   const iconStyle = success
     ? styles.successIcon
     : {...styles.successIcon, color: 'red'};
@@ -26,9 +26,11 @@ const TransferSuccess = ({route, navigation}: any) => {
           </CardContent>
           <CardContent>
             <View style={styles.titleSection}>
-              <Text style={styles.title}>Transfer success</Text>
+              <Text style={styles.title}>
+                Transfer {success ? 'success' : 'failed'}
+              </Text>
               <Text style={styles.amountTransfer}>
-                {new Intl.NumberFormat().format(amount)} USD
+                {success ? `${new Intl.NumberFormat().format(amount)} USD` : ''}
               </Text>
             </View>
           </CardContent>
@@ -38,6 +40,14 @@ const TransferSuccess = ({route, navigation}: any) => {
                 <Text>Time</Text>
                 <Text>{success ? time : getCurrentTime()}</Text>
               </View>
+              {success ? (
+                <View style={styles.transferSection}>
+                  <Text>To: </Text>
+                  <Text>{toUser}</Text>
+                </View>
+              ) : (
+                <></>
+              )}
             </View>
           </CardContent>
           <CardContent>

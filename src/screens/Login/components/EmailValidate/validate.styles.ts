@@ -5,7 +5,6 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'space-between',
     marginTop: 40,
-    padding: 20,
   },
   headSection: {
     marginVertical: 5,

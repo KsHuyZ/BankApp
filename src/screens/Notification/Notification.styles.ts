@@ -10,14 +10,9 @@ const styles = StyleSheet.create({
   },
 
   container: {
-    margin: 10,
+    marginVertical: 20,
     justifyContent: 'center',
     flexDirection: 'column',
-  },
-  tit: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    fontWeight: 'bold',
   },
   text: {
     fontSize: 30,
@@ -27,10 +22,25 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   noti: {
-    margin: 10,
+    margin: 5,
     padding: 10,
-    borderWidth: 1,
-    borderColor: 'green',
+    backgroundColor: '#fff',
+    borderRadius: 5,
   },
+  titleTransfer: {
+    fontSize: 15,
+    fontWeight: 'bold',
+  },
+  titleSection: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  unseen: {
+    marginLeft: 10,
+    backgroundColor: 'red',
+    width: 10,
+    height: 10,
+    borderRadius: 50,
+  }
 });
 export default styles;

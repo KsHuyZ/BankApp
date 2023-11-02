@@ -47,7 +47,7 @@ const EmailValidate = ({navigation}: any) => {
         <Text style={styles.textHead}>Enter Phone Number</Text>
         <View>
           <Text style={styles.text}>
-            Use email to register or log in in BankApp
+            Use email to register or log in in Financial
           </Text>
         </View>
       </View>

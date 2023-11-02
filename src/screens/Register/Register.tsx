@@ -2,6 +2,7 @@ import {View, Text} from 'react-native';
 import React, {useState} from 'react';
 import {Formik} from 'formik';
 import * as Yup from 'yup';
+import {TextInput} from 'react-native-paper';
 
 import Background from '../../components/Background';
 import styles from '../Login/components/EmailValidate/validate.styles';
@@ -9,15 +10,10 @@ import TextInputPaper from '../../components/TextInputPaper';
 import ButtonPaper from '../../components/ButtonPaper';
 import authApi from '../../api/authApi';
 import {SCREEN} from '../../constants';
-import {TextInput} from 'react-native-paper';
 import KeyboardAvoidingWrapper from '../../components/KeyboardAvoidingWrapper';
-import {saveStorage} from '../../utils';
-import {storageKey} from '../../constants';
 import {useAuth} from '../../hooks';
-import httpClient from '../../libs/axios';
 
 const {Home} = SCREEN;
-const {profileKey, refreshTokenKey} = storageKey;
 const schema = Yup.object().shape({
   firstName: Yup.string().required('Please enter first name'),
   lastName: Yup.string().required('Please enter last name'),
@@ -78,7 +74,7 @@ const Register = ({navigation}: any) => {
           <Text style={styles.textHead}>Enter Phone Number</Text>
           <View>
             <Text style={styles.text}>
-              Use email to register or log in in BankApp
+              Use email to register or log in in Financial
             </Text>
           </View>
           <Formik

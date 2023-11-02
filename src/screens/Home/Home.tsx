@@ -1,24 +1,36 @@
 import React, {useEffect, useState} from 'react';
-import {Image, Text, View, ScrollView} from 'react-native';
+import {Image, Text, View, ScrollView, TouchableOpacity} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Card from '../../components/Card';
 import ListService from '../../components/ListServices';
 import RecentTransaction from '../../components/RecentTransaction';
 import styles from './home.styles';
 import {getStorage} from '../../utils';
-import {storageKey} from '../../constants';
+import {SCREEN, storageKey} from '../../constants';
+import notificationApi from '../../api/notificationApi';
 
 const {profileKey} = storageKey;
+const {getUnseenNotifi} = notificationApi;
+const {Notification} = SCREEN;
 
 const HomeScreen = ({navigation}: any) => {
   const [user, setUser] = useState<ProfileType | null>(null);
-
+  const [numNoti, setNumNoti] = useState(0);
   const handleGetUserInfor = async () => {
     const userString = await getStorage(profileKey);
     setUser(JSON.parse(userString!));
   };
+
+  const handleGetNotifiUnseen = async () => {
+    const userString = await getStorage(profileKey);
+    const userJSON = JSON.parse(userString!);
+    const number = await getUnseenNotifi(userJSON._id);
+    setNumNoti(number);
+  };
+
   useEffect(() => {
     handleGetUserInfor();
+    handleGetNotifiUnseen();
   }, []);
 
   const handleNavigateScreen = (screen: string) => {
@@ -35,7 +47,17 @@ const HomeScreen = ({navigation}: any) => {
               {user?.firstName} {user?.lastName}
             </Text>
           </View>
-          <Image source={require('../../assets/images/ic_notif.png')} />
+          <TouchableOpacity
+            style={styles.notiIcon}
+            onPress={() => navigation.replace(Notification)}>
+            {numNoti > 0 ? (
+              <Text style={styles.numUnseen}>{numNoti}</Text>
+            ) : (
+              <></>
+            )}
+
+            <Image source={require('../../assets/images/ic_notif.png')} />
+          </TouchableOpacity>
         </View>
         <View style={styles.card}>
           <Card />

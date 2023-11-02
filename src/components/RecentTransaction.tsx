@@ -6,12 +6,11 @@ import {ActivityIndicator, Button} from 'react-native-paper';
 import historyStyles from '../screens/History/History.styles';
 import {transactionType} from '../utils';
 import {SCREEN} from '../constants/index';
+import { NavigationProp } from '@react-navigation/native';
 
 const {getHistoryLimit} = historyApi;
-const {RECEIVED, SEND} = transactionType;
+const {SEND} = transactionType;
 const {History} = SCREEN;
-
-
 
 const renderTransactionItem = (item: HistoryType) => (
   <View style={historyStyles.container} key={item._id}>
@@ -19,10 +18,11 @@ const renderTransactionItem = (item: HistoryType) => (
       <Text>{item.time}</Text>
       <Text
         style={{color: `${item.transactionType === SEND ? 'red' : 'green'}`}}>
-        {item.transactionType === SEND ? '-' : '+'} {item.ammount} USD
+        {item.transactionType === SEND ? '-' : '+'} {item.transactionId?.amount}{' '}
+        USD
       </Text>
     </View>
-    <Text>{item.message}</Text>
+    <Text>{item.transactionId?.message}</Text>
   </View>
 );
 
@@ -48,12 +48,18 @@ const RecentTransaction = ({navigation}: any) => {
       <View style={styles.list}>
         {loading ? (
           <ActivityIndicator animating={true} color={'black'} />
+        ) : history.length > 0 ? (
+          <>
+            {history.map(renderTransactionItem)}
+            <Button
+              textColor="black"
+              onPress={() => navigation.navigate(History)}>
+              See more
+            </Button>
+          </>
         ) : (
-          history.map(renderTransactionItem)
+          <Text>History is empty</Text>
         )}
-        <Button textColor="black" onPress={() => navigation.navigate(History)}>
-          See more
-        </Button>
       </View>
     </View>
   );

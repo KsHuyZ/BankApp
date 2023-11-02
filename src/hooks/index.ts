@@ -1,6 +1,7 @@
 import {useContext, useEffect} from 'react';
 import {AuthContext} from '../context/AuthContext';
 import socket from '../libs/socket';
+
 export const useAuth = () => {
   const {
     state: profile,

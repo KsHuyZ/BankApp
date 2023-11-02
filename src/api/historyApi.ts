@@ -15,6 +15,6 @@ const historyApi = {
     } catch (error) {
       return {success: false, message: error.response.data.message};
     }
-  }
+  },
 };
 export default historyApi;

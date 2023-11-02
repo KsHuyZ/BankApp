@@ -1,69 +1,87 @@
-import React from 'react';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import {View, Text, FlatList} from 'react-native';
+import React, {useState, useEffect} from 'react';
+import {
+  View,
+  Text,
+  FlatList,
+  TouchableOpacity,
+  SafeAreaView,
+} from 'react-native';
 import styles from '../Notification/Notification.styles';
-const data = [
-  {
-    time: 'Chuyển tiền . 21 giờ trước',
-    content: 'Chuyển tiền thành công',
-    detail:
-      'Bạn đã chuyển tiền thành công số tiền 92.000đ đến TRINH THI THANH THUY (Vietcombank), số tài khoản 1031004879.',
-  },
-  {
-    time: 'Chuyển tiền . 21 giờ trước',
-    content: 'Chuyển tiền thành công',
-    detail:
-      'Bạn đã chuyển tiền thành công số tiền 92.000đ đến TRINH THI THANH THUY (Vietcombank), số tài khoản 1031004879.',
-  },
-  {
-    time: 'Chuyển tiền . 21 giờ trước',
-    content: 'Chuyển tiền thành công',
-    detail:
-      'Bạn đã chuyển tiền thành công số tiền 92.000đ đến TRINH THI THANH THUY (Vietcombank), số tài khoản 1031004879.',
-  },
-  {
-    time: 'Chuyển tiền . 21 giờ trước',
-    content: 'Chuyển tiền thành công',
-    detail:
-      'Bạn đã chuyển tiền thành công số tiền 92.000đ đến TRINH THI THANH THUY (Vietcombank), số tài khoản 1031004879.',
-  },
-  {
-    time: 'Chuyển tiền . 21 giờ trước',
-    content: 'Chuyển tiền thành công',
-    detail:
-      'Bạn đã chuyển tiền thành công số tiền 92.000đ đến TRINH THI THANH THUY (Vietcombank), số tài khoản 1031004879.',
-  },
-  {
-    time: 'Chuyển tiền . 21 giờ trước',
-    content: 'Chuyển tiền thành công',
-    detail:
-      'Bạn đã chuyển tiền thành công số tiền 92.000đ đến TRINH THI THANH THUY (Vietcombank), số tài khoản 1031004879.',
-  },
-];
-const Notification = () => {
+import Background from '../../components/Background';
+import {useAuth} from '../../hooks';
+import notificationApi from '../../api/notificationApi';
+import {calFromDate, transactionType} from '../../utils';
+import {SCREEN} from '../../constants';
+
+const {Detail, Home} = SCREEN;
+
+const {SEND} = transactionType;
+
+const {getNotificationByUserId, seenNotifi} = notificationApi;
+
+const Notification = ({navigation}: any) => {
+  const {profile} = useAuth();
+  const [notifications, setNotifications] = useState<NotifiType[]>([]);
+  const handleGetNotification = async () => {
+    const notification = await getNotificationByUserId(profile._id);
+    setNotifications(notification);
+  };
+
+  const handleNavigate = (item: NotifiType) => {
+    if (!item.seen) {
+      seenNotifi(item._id);
+      const newNotications = notifications.map(noti => {
+        if (noti._id === item._id) {
+          return {...noti, seen: true};
+        }
+        return noti;
+      });
+      setNotifications(newNotications);
+    }
+    navigation.navigate(Detail, {
+      transactionId: item.historyId.transactionId._id,
+      amount: item.historyId.transactionId.amount,
+      receiver: item.historyId.transactionId.toUser,
+      time: item.historyId.time,
+      type: item.historyId.transactionType,
+      balanceAfter: item.historyId.balanceAfter,
+    });
+  };
+
+  useEffect(() => {
+    handleGetNotification();
+  }, []);
+
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.title}>
-        <Text style={styles.text}>Notification</Text>
-      </View>
-      <View style={styles.tit}>
-        <Text style={styles.text1}>Important</Text>
-        <Text style={styles.text1}>Special offers</Text>
-        <Text style={styles.text1}>Interact</Text>
-      </View>
-      <FlatList
-        data={data}
-        renderItem={({item}) => (
-          <View style={styles.noti}>
-            <View>
-              <Text>{item.time}</Text>
-              <Text>{item.content}</Text>
-            </View>
-            <Text>{item.detail}</Text>
-          </View>
-        )}
-      />
-    </SafeAreaView>
+    <Background goBack={() => navigation.replace(Home)} title="Notification">
+      <SafeAreaView style={styles.container}>
+        <FlatList
+          data={notifications}
+          renderItem={({item}) => (
+            <TouchableOpacity
+              style={styles.noti}
+              onPress={() => handleNavigate(item)}>
+              <View>
+                <Text>{calFromDate(item.historyId?.time)}</Text>
+                <View style={styles.titleSection}>
+                  <Text style={styles.titleTransfer}>
+                    {item.historyId?.transactionType === SEND
+                      ? 'Tranfer'
+                      : `Received from ${item.historyId?.transactionId.fromUser.firstName} ${item.historyId.transactionId.fromUser.lastName}`}
+                  </Text>
+                  {!item.seen ? <View style={styles.unseen} /> : <></>}
+                </View>
+              </View>
+              <Text>
+                {item.historyId.transactionType === SEND
+                  ? `You are transfer success ${item.historyId.transactionId.amount} USD to ${item.historyId.transactionId.toUser.firstName} ${item.historyId.transactionId.toUser.lastName}, card number ${item.historyId.transactionId.toUser.cardNumber}`
+                  : `Received ${item.historyId.transactionId.amount}`}
+              </Text>
+            </TouchableOpacity>
+          )}
+        />
+      </SafeAreaView>
+    </Background>
   );
 };
 

@@ -11,11 +11,42 @@ type ProfileType = {
   refreshToken?: string;
 };
 
+type NotifiType = {
+  _id: string;
+  historyId: {
+    _id: string;
+    transactionId: {
+      _id: string;
+      fromUser: {
+        firstName: string;
+        lastName: string;
+      };
+      toUser: {
+        firstName: string;
+        lastName: string;
+        cardNumber: string;
+      };
+      amount: number;
+      message: string;
+    };
+    balanceAfter: number;
+    transactionType: string;
+    time: string;
+  };
+  seen: boolean;
+};
+
 type HistoryType = {
+  _id: string;
   transactionType: string;
   time: string;
-  ammount: number;
+  amount: number;
   message: string;
+  balanceAfter: number;
+  transactionId: {
+    message: string;
+    amount: number;
+  };
 };
 
 const enum REDUCER_ACTION_TYPE {

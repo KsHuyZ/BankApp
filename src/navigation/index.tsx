@@ -14,8 +14,11 @@ import StartScreen from '../screens/Start/Start';
 import TransactionScreen from '../screens/Transaction/Transaction';
 import TransferSuccessScreen from '../screens/Transaction/components/TransferSuccess';
 import MyQRScreen from '../screens/MyQR/MyQR';
-import {getStorage, removeStorage} from '../utils';
+import ChartScreen from '../screens/History/components/Chart';
+import DetailScreen from '../screens/Detail/Detail';
+import {getStorage, newNotification, removeStorage} from '../utils';
 import {useAuth, useSocketEvent} from '../hooks';
+import ProfileScreen from '../screens/Profile/Profile';
 
 const {
   Home,
@@ -30,6 +33,9 @@ const {
   TransferSuccess,
   Notification,
   MyQR,
+  Chart,
+  Detail,
+  Profile,
 } = SCREEN;
 const {refreshTokenKey} = storageKey;
 
@@ -75,11 +81,10 @@ const Navigator = ({navigation}: any) => {
 
   const handleReceiveAmount = (newAmount: number) => {
     updateProfile({...profile, balance: newAmount});
-    console.log('Bạn vừa nhận tiền');
+    newNotification('You are receive money');
   };
 
   useSocketEvent('receive_amount', handleReceiveAmount);
-
   useEffect(() => {
     if (appStateVisible === 'inactive' || appStateVisible === 'background') {
       handleNavigate();
@@ -88,7 +93,7 @@ const Navigator = ({navigation}: any) => {
 
   return (
     <Stack.Navigator
-      initialRouteName={Notification}
+      initialRouteName={Start}
       screenOptions={{headerShown: false}}>
       <Stack.Screen name={Home} component={HomeScreen} />
       <Stack.Screen name={Welcome} component={WelcomeScreen} />
@@ -102,7 +107,8 @@ const Navigator = ({navigation}: any) => {
       <Stack.Screen name={History} component={HistoryScreen} />
       <Stack.Screen name={Notification} component={NotificationScreen} />
       <Stack.Screen name={MyQR} component={MyQRScreen} />
-
+      <Stack.Screen name={Detail} component={DetailScreen} />
+      <Stack.Screen name={Profile} component={ProfileScreen} />
     </Stack.Navigator>
   );
 };

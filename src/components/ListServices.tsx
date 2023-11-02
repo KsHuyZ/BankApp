@@ -11,11 +11,12 @@ export interface servicesItem {
 }
 const fontSize = 25;
 
-const {Transaction, MyQR} = SCREEN;
+const {Transaction, MyQR, Profile} = SCREEN;
 
 const listService = [
   {
     name: 'My Wallet',
+    navigate: Profile,
     icon: <AntdIcon name="wallet" style={{fontSize}} />,
   },
   {

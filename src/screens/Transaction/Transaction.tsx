@@ -14,7 +14,7 @@ import * as Yup from 'yup';
 import userApi from '../../api/userApi';
 import TextInputPaper, {TextInputFlat} from '../../components/TextInputPaper';
 import ButtonPaper from '../../components/ButtonPaper';
-import {formatNumber, socketEmit} from '../../utils';
+import {formatNumber, newNotification, socketEmit} from '../../utils';
 import {SCREEN} from '../../constants/index';
 
 type TransferType = {
@@ -25,15 +25,17 @@ type TransferType = {
 
 const {TransferSuccess} = SCREEN;
 
-const schema = Yup.object().shape({
-  cardNumber: Yup.number().required('Please enter card number'),
-  amount: Yup.number().required('Please enter money'),
-  message: Yup.string(),
-});
-
 const {getUserNamebyCardNumber} = userApi;
 
 const Transaction = ({navigation}: any) => {
+  const {profile, updateProfile} = useAuth();
+
+  const schema = Yup.object().shape({
+    cardNumber: Yup.number().required('Please enter card number'),
+    amount: Yup.number().required('Please enter money').max(profile.balance),
+    message: Yup.string(),
+  });
+
   const [showMoney, setShowMoney] = useState<boolean>(false);
   const [nameReceiving, setNameReceiving] = useState({
     show: false,
@@ -41,28 +43,34 @@ const Transaction = ({navigation}: any) => {
     loading: false,
     error: '',
   });
-  const {profile, updateProfile} = useAuth();
 
   const handleTransferResult = ({
     newBalance,
     success,
     amount,
     time,
+    toUser,
   }: {
     newBalance: number;
     success: boolean;
     amount: number;
     time: string;
+    toUser: string;
   }) => {
     if (success) {
       updateProfile({...profile, balance: newBalance});
-      console.log({...profile, balance: newBalance});
-      navigation.replace(TransferSuccess, {
-        success,
-        amount,
-        time,
-      });
     }
+    newNotification(
+      `You have successfully transferred the amount of ${new Intl.NumberFormat().format(
+        amount,
+      )} to ${toUser}`,
+    );
+    navigation.replace(TransferSuccess, {
+      success,
+      amount,
+      time,
+      toUser,
+    });
   };
 
   useSocketEvent('update_balance', handleTransferResult);
@@ -108,7 +116,7 @@ const Transaction = ({navigation}: any) => {
   };
 
   return (
-    <Background goBack={() => navigation.goBack()}>
+    <Background goBack={() => navigation.goBack()} title="Transaction">
       <Formik
         initialValues={{
           cardNumber: '',

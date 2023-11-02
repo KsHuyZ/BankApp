@@ -1,7 +1,7 @@
 import {View, Text, StyleSheet, ImageBackground} from 'react-native';
 import React, {useEffect} from 'react';
 import {ProgressBar} from 'react-native-paper';
-import {clearStorage, getStorage} from '../../utils';
+import {getStorage} from '../../utils';
 import {storageKey, SCREEN} from '../../constants';
 import Card from '../../components/Card';
 
@@ -28,7 +28,7 @@ const Start = ({navigation}: any) => {
         <View style={styles.card}>
           <Card />
         </View>
-        <Text style={styles.title}>Bank App</Text>
+        <Text style={styles.title}>Financial</Text>
         <ProgressBar color={'#fff'} style={styles.progress} indeterminate />
       </View>
     </ImageBackground>

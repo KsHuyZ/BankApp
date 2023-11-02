@@ -11,6 +11,9 @@ export const SCREEN = {
   History: 'History',
   Notification: 'Notification',
   MyQR: 'MyQR',
+  Chart: 'Chart',
+  Detail: 'Detail',
+  Profile: 'Profile',
 };
 export const storageKey = {
   profileKey: 'profile',
