@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import styles from '../Notification/Notification.styles';
 import Background from '../../components/Background';
-import {useAuth} from '../../hooks';
+import {useAuth, useSocketEvent} from '../../hooks';
 import notificationApi from '../../api/notificationApi';
 import {calFromDate, transactionType} from '../../utils';
 import {SCREEN} from '../../constants';
@@ -51,6 +51,12 @@ const Notification = ({navigation}: any) => {
   useEffect(() => {
     handleGetNotification();
   }, []);
+
+  const handleGetNewNoti = (notifi: NotifiType) => {
+    setNotifications(prev => [...prev, notifi]);
+  };
+
+  useSocketEvent('new_noti', handleGetNewNoti);
 
   return (
     <Background goBack={() => navigation.replace(Home)} title="Notification">

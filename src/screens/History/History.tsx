@@ -45,17 +45,19 @@ const History = ({navigation}: any) => {
 
   const handleReceiveAmount = ({
     newBalance,
+    fromUser,
     newHistory,
+    amount,
   }: {
     newBalance: number;
+    fromUser: string;
     newHistory: HistoryType;
+    amount: number;
   }) => {
-    updateProfile({...profile, balance: newBalance});
-    setHistory(prev => ({...prev, newHistory}));
+    setHistory(prev => [...prev, newHistory]);
   };
 
-  useSocketEvent('update_balance', handleReceiveAmount);
-
+  useSocketEvent('receive_amount', handleReceiveAmount);
   const data = history.filter(his => {
     if (selected === 'Send') {
       return his.transactionType === SEND;

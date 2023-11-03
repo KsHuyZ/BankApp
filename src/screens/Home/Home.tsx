@@ -8,6 +8,7 @@ import styles from './home.styles';
 import {getStorage} from '../../utils';
 import {SCREEN, storageKey} from '../../constants';
 import notificationApi from '../../api/notificationApi';
+import {useSocketEvent} from '../../hooks';
 
 const {profileKey} = storageKey;
 const {getUnseenNotifi} = notificationApi;
@@ -36,6 +37,12 @@ const HomeScreen = ({navigation}: any) => {
   const handleNavigateScreen = (screen: string) => {
     navigation.navigate(screen);
   };
+
+  const handleGetNewNoti = () => {
+    setNumNoti(prev => prev + 1);
+  };
+
+  useSocketEvent('new_noti', handleGetNewNoti);
 
   return (
     <SafeAreaView style={{flex: 1}}>

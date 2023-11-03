@@ -88,4 +88,3 @@ export const calFromDate = (input: string) => {
   const output = dayjs(reversedDateTime).fromNow();
   return output;
 };
-

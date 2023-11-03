@@ -26,11 +26,13 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     width: '100%',
   },
+  inputSection: {
+    width: '100%',
+  },
   profileTitle: {
     fontSize: 18,
     fontWeight: 'bold',
     width: '100%',
-  }
-
+  },
 });
 export default styles;

@@ -6,7 +6,7 @@ import {ActivityIndicator, Button} from 'react-native-paper';
 import historyStyles from '../screens/History/History.styles';
 import {transactionType} from '../utils';
 import {SCREEN} from '../constants/index';
-import { NavigationProp } from '@react-navigation/native';
+import {NavigationProp} from '@react-navigation/native';
 
 const {getHistoryLimit} = historyApi;
 const {SEND} = transactionType;

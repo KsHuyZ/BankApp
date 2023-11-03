@@ -79,9 +79,19 @@ const Navigator = ({navigation}: any) => {
     }
   };
 
-  const handleReceiveAmount = (newAmount: number) => {
-    updateProfile({...profile, balance: newAmount});
-    newNotification('You are receive money');
+  const handleReceiveAmount = ({
+    newBalance,
+    fromUser,
+    newHistory,
+    amount,
+  }: {
+    newBalance: number;
+    fromUser: string;
+    newHistory: HistoryType;
+    amount: number;
+  }) => {
+    updateProfile({...profile, balance: newBalance});
+    newNotification(`You are receive ${amount} USD from ${fromUser}`);
   };
 
   useSocketEvent('receive_amount', handleReceiveAmount);

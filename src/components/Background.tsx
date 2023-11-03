@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
     height: '100%',
     flexDirection: 'column',
     justifyContent: 'center',
-    position:'relative',
+    position: 'relative',
   },
   inside: {
     height: '95%',
