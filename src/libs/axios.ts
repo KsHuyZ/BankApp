@@ -5,8 +5,8 @@ import {storageKey} from '../constants/index';
 const {profileKey, refreshTokenKey} = storageKey;
 
 const httpClient = axios.create({
-  // baseURL: 'https://banka-8las.onrender.com',
-  baseURL: 'http://10.0.2.2:4000',
+  baseURL: 'https://banka-8las.onrender.com',
+  // baseURL: 'http://10.0.2.2:4000',
   headers: {
     'Content-Type': 'application/json',
     Accept: 'application/json',
